@@ -1,29 +1,32 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-module.exports = {
-  entry: "./src/app.js",
-  output: {
-    path: __dirname + "/build",
-    filename: "bundle.js",
-  },
-  devServer: {
-    open: true,
-    compress: true,
-    port: 8080,
-  },
+module.exports = (env, { mode }) => {
+  const isProduction = mode === "production";
 
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"],
-      },
+  return {
+    entry: "./src/app.js",
+    output: {
+      path: __dirname + "/build",
+      filename: isProduction ? "[name].[contenthash].js" : "main.js",
+    },
+    devServer: {
+      open: true,
+      compress: true,
+      port: 8080,
+    },
+    module: {
+      rules: [
+        {
+          test: /\.css$/,
+          use: ["style-loader", "css-loader"],
+        },
+      ],
+    },
+
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: "./src/index.html",
+      }),
     ],
-  },
-
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "./src/index.html",
-    }),
-  ],
+  };
 };
