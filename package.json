@@ -10,7 +10,6 @@
     "test": "jest",
     "test:dev": "jest --watch=true"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",
